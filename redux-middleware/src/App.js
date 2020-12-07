@@ -1,7 +1,5 @@
 import CounterContainer from "./containers/CounterContainer";
 
-function App() {
+export default function App() {
   return <CounterContainer />;
 }
-
-export default App;
