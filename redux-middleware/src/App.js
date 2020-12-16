@@ -1,5 +1,5 @@
-import CounterContainer from "./containers/CounterContainer";
+import PostListContainer from "./containers/PostListContainer";
 
 export default function App() {
-  return <CounterContainer />;
+  return <PostListContainer />;
 }
