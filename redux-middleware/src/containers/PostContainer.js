@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Post from "../components/Post";
-import { getPost } from "../modules/posts";
+import { clearPost, getPost } from "../modules/posts";
 
 export default function PostContainer({ postId }) {
   const { data, loading, error } = useSelector((state) => state.posts.post);
@@ -9,6 +9,10 @@ export default function PostContainer({ postId }) {
 
   useEffect(() => {
     dispatch(getPost(postId));
+    // clean up 함수
+    return () => {
+      dispatch(clearPost());
+    };
   }, [postId, dispatch]);
 
   if (loading) return <div>로딩중...</div>;
