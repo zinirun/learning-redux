@@ -15,26 +15,23 @@ const GET_POST_ERROR = "posts/GET_POST_ERROR";
 
 // thunk 생성 함수
 export const getPosts = createPromiseThunk(GET_POSTS, postsAPI.getPosts);
-export const getPost = createPromiseThunk(GET_POSTS, postsAPI.getPostById);
+export const getPost = createPromiseThunk(GET_POST, postsAPI.getPostById);
 
 const initialState = {
   posts: reducerUtils.initial(),
   post: reducerUtils.initial(),
 };
 
-const getPostsReducer = handleAsyncActions(GET_POSTS, "posts");
-const getPostReducer = handleAsyncActions(GET_POST, "post");
-
 export default function posts(state = initialState, action) {
   switch (action.type) {
     case GET_POSTS:
     case GET_POSTS_SUCCESS:
     case GET_POSTS_ERROR:
-      return getPostsReducer(state, action);
+      return handleAsyncActions(GET_POSTS, "posts")(state, action);
     case GET_POST:
     case GET_POST_SUCCESS:
     case GET_POST_ERROR:
-      return getPostReducer(state, action);
+      return handleAsyncActions(GET_POST, "post")(state, action);
     default:
       return state;
   }

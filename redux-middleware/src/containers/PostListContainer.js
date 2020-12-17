@@ -7,6 +7,7 @@ function PostListContainer() {
   const { data, loading, error } = useSelector((state) => state.posts.posts);
   const dispatch = useDispatch();
 
+  // mount 될때 한번 실행
   useEffect(() => {
     dispatch(getPosts());
   }, [dispatch]);
