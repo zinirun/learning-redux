@@ -1,7 +1,9 @@
 import * as postsAPI from "../api/posts";
 import {
   createPromiseThunk,
+  createPromiseThunkById,
   handleAsyncActions,
+  handleAsyncActionsById,
   reducerUtils,
 } from "../lib/asyncUtils";
 
@@ -17,12 +19,16 @@ const CLEAR_POST = "posts/CLEAR_POST";
 
 // thunk 생성 함수
 export const getPosts = createPromiseThunk(GET_POSTS, postsAPI.getPosts);
-export const getPost = createPromiseThunk(GET_POST, postsAPI.getPostById);
+export const getPost = createPromiseThunkById(GET_POST, postsAPI.getPostById);
+export const goToHome = () => (dispatch, getState, { history }) => {
+  history.push("/");
+};
+
 export const clearPost = () => ({ type: CLEAR_POST });
 
 const initialState = {
   posts: reducerUtils.initial(),
-  post: reducerUtils.initial(),
+  post: {},
 };
 
 export default function posts(state = initialState, action) {
@@ -34,7 +40,7 @@ export default function posts(state = initialState, action) {
     case GET_POST:
     case GET_POST_SUCCESS:
     case GET_POST_ERROR:
-      return handleAsyncActions(GET_POST, "post")(state, action);
+      return handleAsyncActionsById(GET_POST, "post", true)(state, action);
     case CLEAR_POST:
       return {
         ...state,
